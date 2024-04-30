@@ -11,6 +11,13 @@
 //*** Variables ***/
 const gallery = document.querySelector(".gallery");
 gallery.classList.add("gallery");
+const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
+console.log(portfolio);
+const filters = document.createElement("filters"); //creer le conteneur des filtres
+console.log(filters);
+
+portfolio.appendChild(filters);
+portfolio.insertBefore(filters, gallery); //place l'élément filtres avant la galerie du conteneur portfolio
 
 //appel a l'API pour récupéerer dynamiquement les projets de l'architecte (les Works).
 async function getWorks() {
@@ -40,3 +47,33 @@ async function affichageWorks() {
   });
 }
 affichageWorks();
+
+//Récupération des catégories via l'API
+
+async function getCategories() {
+  const response = await fetch("http://localhost:5678/api/categories");
+  // console.log(responseCaegorie);
+  return await response.json();
+  console.log(responseJson);
+}
+
+//*** affichage des bouton du filtre ***/
+
+async function afficherBtnCategorie() {
+  const categories = await getCategories(); //récupérer le tableau des categories
+  console.log(categories);
+
+  //**creer le bouton de reset des filtres**
+  const btnTous = document.createElement("button");
+  btnTous.textContent = "Tous";
+  filters.appendChild(btnTous);
+
+  //**creer un bouton filtre par catégorie**
+  categories.forEach((categorie) => {
+    const btn = document.createElement("button"); //creer un bouton pour chaque categorie
+    btn.textContent = categorie.name; //afficher le nom de la categorie dans le btn
+    btn.id = categorie.id; //récupérer l'id de la catégorie
+    filters.appendChild(btn); //declarer que btn est enfant de filters
+  });
+}
+afficherBtnCategorie();
