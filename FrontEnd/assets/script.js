@@ -9,6 +9,7 @@
 //     console.log(error);
 //   });
 //*** Variables ***/
+let index = 0;
 const gallery = document.querySelector(".gallery");
 gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
@@ -72,7 +73,7 @@ async function displayBtnCategory() {
   categorys.forEach((category) => {
     const btnCategory = document.createElement("button"); //creer un bouton pour chaque categorie
     filters.appendChild(btnCategory); //declarer que btn est enfant de filters
-
+    btnCategory.classList.add("filter");
     btnCategory.textContent = category.name; //afficher le nom de la categorie dans le btn
     btnCategory.id = category.id; //récupérer l'id de la catégorie
   });
@@ -90,10 +91,12 @@ async function filterCategory() {
     button.addEventListener("click", (e) => {
       btnId = e.target.id;
       gallery.innerHTML = "";
+
       if (btnId !== "") {
         const arrayWorksTri = arrayWorks.filter((work) => {
           return work.categoryId == btnId;
         });
+
         arrayWorksTri.forEach((work) => {
           createWorks(work);
         });
