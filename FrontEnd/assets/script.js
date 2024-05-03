@@ -13,7 +13,7 @@ const gallery = document.querySelector(".gallery");
 gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
 console.log(portfolio);
-const filters = document.createElement("filters"); //creer le conteneur des filtres
+const filters = document.createElement("div"); //creer le conteneur des filtres
 console.log(filters);
 
 portfolio.appendChild(filters);
@@ -28,52 +28,80 @@ async function getWorks() {
 }
 getWorks();
 
-// Affichage des Woks
-async function affichageWorks() {
-  //je créér une variable de mon tableau des works en appellant la fonction getWorks
+// Affichage des Woks dans le dom
+
+async function displayWorks() {
   const arrayWorks = await getWorks();
-  console.log(arrayWorks);
   arrayWorks.forEach((work) => {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const figcaption = document.createElement("figcaption");
-
-    img.src = work.imageUrl;
-    figcaption.textContent = work.title;
-
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    gallery.appendChild(figure);
+    createWorks(work);
   });
 }
-affichageWorks();
+displayWorks();
+
+async function createWorks(work) {
+  const figure = document.createElement("figure");
+  const img = document.createElement("img");
+  const figcaption = document.createElement("figcaption");
+
+  img.src = work.imageUrl;
+  figcaption.textContent = work.title;
+
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  gallery.appendChild(figure);
+}
 
 //Récupération des catégories via l'API
 
-async function getCategories() {
+async function getCategorys() {
   const response = await fetch("http://localhost:5678/api/categories");
-  // console.log(responseCaegorie);
   return await response.json();
-  console.log(responseJson);
 }
 
 //*** affichage des bouton du filtre ***/
 
-async function afficherBtnCategorie() {
-  const categories = await getCategories(); //récupérer le tableau des categories
-  console.log(categories);
+//**creer le bouton de reset des filtres**
+const btnTous = document.createElement("button");
+btnTous.textContent = "Tous";
+filters.appendChild(btnTous);
 
-  //**creer le bouton de reset des filtres**
-  const btnTous = document.createElement("button");
-  btnTous.textContent = "Tous";
-  filters.appendChild(btnTous);
-
+async function displayBtnCategory() {
+  const categorys = await getCategorys(); //récupérer le tableau des categories
+  console.log(categorys);
   //**creer un bouton filtre par catégorie**
-  categories.forEach((categorie) => {
-    const btn = document.createElement("button"); //creer un bouton pour chaque categorie
-    btn.textContent = categorie.name; //afficher le nom de la categorie dans le btn
-    btn.id = categorie.id; //récupérer l'id de la catégorie
-    filters.appendChild(btn); //declarer que btn est enfant de filters
+  categorys.forEach((category) => {
+    const btnCategory = document.createElement("button"); //creer un bouton pour chaque categorie
+    filters.appendChild(btnCategory); //declarer que btn est enfant de filters
+
+    btnCategory.textContent = category.name; //afficher le nom de la categorie dans le btn
+    btnCategory.id = category.id; //récupérer l'id de la catégorie
   });
 }
-afficherBtnCategorie();
+displayBtnCategory();
+
+//***Activer les boutons des filtres categories***/
+
+async function filterCategory() {
+  const arrayWorks = await getWorks();
+  console.log(arrayWorks);
+  const buttons = document.querySelectorAll("button");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      btnId = e.target.id;
+      gallery.innerHTML = "";
+      if (btnId !== "") {
+        const arrayWorksTri = arrayWorks.filter((work) => {
+          return work.categoryId == btnId;
+        });
+        arrayWorksTri.forEach((work) => {
+          createWorks(work);
+        });
+      } else {
+        displayWorks();
+      }
+      console.log(btnId);
+    });
+  });
+}
+filterCategory();
