@@ -15,6 +15,7 @@ gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
 console.log(portfolio);
 const filters = document.createElement("div"); //creer le conteneur des filtres
+filters.classList.add("filter_container");
 console.log(filters);
 
 portfolio.appendChild(filters);
@@ -65,6 +66,8 @@ async function getCategorys() {
 const btnTous = document.createElement("button");
 btnTous.textContent = "Tous";
 filters.appendChild(btnTous);
+btnTous.classList.add("filter");
+btnTous.classList.add("filter_active");
 
 async function displayBtnCategory() {
   const categorys = await getCategorys(); //récupérer le tableau des categories
@@ -74,6 +77,7 @@ async function displayBtnCategory() {
     const btnCategory = document.createElement("button"); //creer un bouton pour chaque categorie
     filters.appendChild(btnCategory); //declarer que btn est enfant de filters
     btnCategory.classList.add("filter");
+    btnCategory.classList.add("filter_inactive");
     btnCategory.textContent = category.name; //afficher le nom de la categorie dans le btn
     btnCategory.id = category.id; //récupérer l'id de la catégorie
   });

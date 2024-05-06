@@ -28,11 +28,20 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+:root{
+
+	--main-color: #FFFCF4  ;
+}
 body {
 	line-height: 1;
+	background-color: var(--main-color);
 }
 ol, ul {
 	list-style: none;
+}
+a{
+	text-decoration: none;
+	color:inherit;
 }
 blockquote, q {
 	quotes: none;
@@ -91,14 +100,19 @@ nav ul {
 	list-style-type: none;
 
 }
-nav li {
+nav li  {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
+li :hover, a:hover {
 	color: #B1663C;
 }
+nav li a{
+	text-decoration: none;
+	color: inherit;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -122,22 +136,39 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+.filter_container{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 45px;
+	
+}
 .filter{
 	font-family: 'Syne';
 	font-weight: 700;
-	color: #1D6154;
-	background-color: transparent;
-	margin : 2em auto ;
-	width: 180px;
+	font-size: 1rem;
+	text-align: center;
+	justify-content: center;
+	padding: 10px 20px;
+	margin: 0px 10px  ;
+	
+	
 	text-align: center;
 	border-radius: 60px ;
 }
-.filter_selected{
+.filter_inactive{
+	background-color: transparent;
+	color: #1D6154;
+}
+.filter_active{
 	background-color: #1D6154;
+	color: var(--main-color);
+	
+	
 }
 .gallery {
 	width: 100%;
@@ -167,6 +198,9 @@ li:hover {
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
+}
+.error_message{
+	color: red;
 }
 
 #contact input,.login input {
@@ -203,6 +237,8 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
+	background-color: white;
+	
 }
 
