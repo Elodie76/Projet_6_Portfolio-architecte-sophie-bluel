@@ -148,6 +148,13 @@ nav li a{
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.btn_modifier{
+	position: relative;
+	right: -680px;
+	top: -50px;
+	
+}
 .filter_container{
 	display: flex;
 	justify-content: center;
