@@ -13,10 +13,12 @@ let index = 0;
 const gallery = document.querySelector(".gallery");
 gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
-console.log(portfolio);
+// console.log(portfolio);
 const filters = document.createElement("div"); //creer le conteneur des filtres
 filters.classList.add("filter_container");
-console.log(filters);
+// console.log(filters);
+const btnModifier = document.querySelector(".btn_modifier");
+console.log(btnModifier);
 
 portfolio.appendChild(filters);
 portfolio.insertBefore(filters, gallery); //place l'élément filtres avant la galerie du conteneur portfolio
@@ -139,5 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
       console.log("vous etes connecté");
       logOutBtn.textContent = "Logout";
+      btnModifier.classList.remove("loged-content");
+      
   }
 });

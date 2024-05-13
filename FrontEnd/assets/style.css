@@ -149,11 +149,49 @@ nav li a{
 	margin-bottom: 1em;
 }
 
+.loged-content{
+	display: none;
+}
 .btn_modifier{
 	position: relative;
 	right: -680px;
 	top: -50px;
 	
+}
+
+.modal{
+position: fixed;
+display: flex;
+align-items: center;
+justify-content: center;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-wrapper{
+	overflow: auto;
+	width: 700px;
+	max-width: calc(100vh - 50px);
+	max-height: calc(100vh - 50px);
+	padding: 40px 80px;
+	background: hsl(30, 50%, 99%) ;
+	border-radius: 8px;
+}
+
+/* Bouton fermer modale */
+.hidden-text{
+	display: none;
+}
+
+.js-close-modal{
+	border: none;
+	background-color: transparent;
+	position: relative;
+    right: -297px;
+    top: -17px;
 }
 .filter_container{
 	display: flex;

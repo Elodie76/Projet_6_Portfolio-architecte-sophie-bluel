@@ -95,6 +95,8 @@ console.log(logOutBtn);
 
 document.addEventListener('DOMContentLoaded', function() {
   const token = localStorage.getItem('token');
+  
+  
   if (!token) {
       // Rediriger vers la page de login si aucun token n'est trouvé
       window.location.href = '/login';
@@ -102,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
       console.log("Vous êtes déja connecté");
       logOutBtn.textContent = "Logout";
+      
+
 
   }
 });
