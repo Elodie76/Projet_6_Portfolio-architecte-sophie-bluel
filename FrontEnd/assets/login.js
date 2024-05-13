@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (!token) {
       // Rediriger vers la page de login si aucun token n'est trouvé
-      window.location.href = '/login';
+      // window.location.href = './log_in';
   } else {
       // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
       console.log("Vous êtes déja connecté");

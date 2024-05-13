@@ -1,13 +1,4 @@
-// fetch("http://localhost:5678/api/works")
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+
 //*** Variables ***/
 let index = 0;
 const gallery = document.querySelector(".gallery");
@@ -136,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const token = localStorage.getItem('token');
   if (!token) {
       // Rediriger vers la page de login si aucun token n'est trouvé
-      window.location.href = '/login';
+      // window.location.href = './log_in.html';
   } else {
       // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
       console.log("vous etes connecté");
