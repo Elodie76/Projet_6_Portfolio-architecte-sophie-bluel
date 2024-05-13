@@ -22,19 +22,24 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-:root{
 
+
+:root{
+	
+  	
 	--main-color: #FFFCF4  ;
 }
 body {
 	line-height: 1;
 	background-color: var(--main-color);
+	
 }
 ol, ul {
 	list-style: none;
@@ -57,7 +62,7 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1400px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
@@ -112,6 +117,8 @@ nav li a{
 	text-decoration: none;
 	color: inherit;
 }
+
+
 
 #introduction {
 	display: flex;
@@ -202,6 +209,9 @@ nav li a{
 .error_message{
 	color: red;
 }
+.input_error{
+	box-shadow: 0px 4px 14px rgba(241, 5, 5, 0.885);
+}
 
 #contact input,.login input {
 	height: 50px;
@@ -233,6 +243,13 @@ input[type="submit"]{
 	color: #1D6154;
 	text-align: center;
 }
+
+.log_out{
+	
+	text-align: center;
+}
+
+
 
 footer nav ul {
 	display: flex;

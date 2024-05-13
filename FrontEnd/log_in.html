@@ -20,7 +20,7 @@
             <ul>
                 <li><a href="">projets</a></li>
                 <li><a href="">contact</a></li>
-                <li><a href="./log_in.html">login</a></li>
+                <li><a class="log_out" href="./log_in.html">login</a></li>
                 <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
@@ -28,13 +28,13 @@
     <main>
         <section class="login">
             <h2>Log In</h2>
-            <p class="error_message">message d'erreur</p>
+            
             <form action="submit">
                 <label for="email">E-mail</label><br>
                 <input id="email" type="email"><br>
                 <label for="password">Mot de passe</label><br>
                 <input id="password" type="password"><br>
-
+                <p class="error_message"></p>
                 <input type="submit" value="Connection"><br>
                 <a href="#">Mot de passe oublié</a>
             </form>
