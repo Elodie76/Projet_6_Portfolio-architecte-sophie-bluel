@@ -186,7 +186,7 @@ background: rgba(0, 0, 0, 0.3);
 	display: none;
 }
 
-.js-close-modal{
+.js-modal-close{
 	border: none;
 	background-color: transparent;
 	position: relative;
