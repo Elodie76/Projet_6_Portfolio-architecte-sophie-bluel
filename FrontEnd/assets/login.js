@@ -104,13 +104,16 @@ document.addEventListener('DOMContentLoaded', function() {
       // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
       console.log("Vous êtes déja connecté");
       logOutBtn.textContent = "Logout";
-      
+      logOutBtn.classListadd("log_out");
 
 
   }
 });
 
-function logOut() {
-  logOutBtn.classListadd("log_out");
+const logOut = function (e) {
+  e.preventDefault();
+  logOutBtn.addEventListener('click', (e) => {
+  logOutBtn.classList.remove(log_out); 
+  });
   
-}
+};

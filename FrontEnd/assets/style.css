@@ -33,7 +33,7 @@ footer, header, hgroup, menu, nav, section {
 
 :root{
 	
-  	
+  	--font-familly-content: 'Work Sans' ;
 	--main-color: #FFFCF4  ;
 }
 body {
@@ -64,7 +64,7 @@ table {
 body {
 	max-width: 1400px;
 	margin:auto;
-	font-family: 'Work Sans' ;
+	font-family: var(--font-familly-content) ;
 	font-size: 14px;
 }
 header {
@@ -123,6 +123,7 @@ nav li a{
 #introduction {
 	display: flex;
 	align-items: center;
+	margin-bottom: 150px;
 }
 #introduction figure {
 	flex: 1
@@ -152,10 +153,19 @@ nav li a{
 .loged-content{
 	display: none;
 }
+/* section portfolio */
+/* placement bandeau titre */
+.order-title-projets{
+display: flex;
+justify-content: center;
+margin-bottom: 30px;
+}
 .btn_modifier{
+	
 	position: relative;
-	right: -680px;
-	top: -50px;
+	right: -30px;
+	top: 10px;
+	margin-right: 0px;
 	
 }
 
@@ -170,15 +180,42 @@ width: 100%;
 height: 100%;
 background: rgba(0, 0, 0, 0.3);
 }
-
+/* Gestion de la modale */
 .modal-wrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	overflow: auto;
-	width: 700px;
-	max-width: calc(100vh - 50px);
-	max-height: calc(100vh - 50px);
-	padding: 40px 80px;
+	/* width: 700px; */
+	max-width: calc(100vh - 1px);
+	max-height: calc(100vh - 1px);
+	padding: 40px 40px;
 	background: hsl(30, 50%, 99%) ;
 	border-radius: 8px;
+}
+
+.modal-content{
+	padding: 50px;
+}
+
+.modal-title{
+	color: black;
+	font-size: 1.2rem;
+	font-family: var(--font-familly-content) ;
+	font-weight: 100;
+}
+/* gallerie de la modale */
+.modal-gallery{
+	
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 30px;
+	
+}
+.modal-gallery img{
+	width: 80px;
 }
 
 /* Bouton fermer modale */
@@ -189,14 +226,16 @@ background: rgba(0, 0, 0, 0.3);
 .js-modal-close{
 	border: none;
 	background-color: transparent;
-	position: relative;
-    right: -297px;
-    top: -17px;
+	width: 100%;
+	display: flex;
+	justify-content: right;
+	margin-bottom: 20px;
+	
 }
 .filter_container{
 	display: flex;
 	justify-content: center;
-	margin-bottom: 45px;
+	margin-bottom: 60px;
 	
 }
 .filter{
@@ -207,18 +246,17 @@ background: rgba(0, 0, 0, 0.3);
 	justify-content: center;
 	padding: 10px 20px;
 	margin: 0px 10px  ;
-	
-	
+	background-color: transparent;
+	color: #1D6154;
+	border: solid 1.5px #1D6154;
 	text-align: center;
 	border-radius: 60px ;
 }
-.filter_inactive{
-	background-color: transparent;
-	color: #1D6154;
-}
+
 .filter_active{
 	background-color: #1D6154;
 	color: var(--main-color);
+	border: none;
 	
 	
 }
@@ -277,10 +315,10 @@ input[type="submit"]{
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	
+	padding: 10px 40px;
 	margin : 2em auto ;
-	width: 180px;
 	text-align: center;
+	border: none;
 	border-radius: 60px ;
 }
 

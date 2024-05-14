@@ -18,7 +18,7 @@ const closeModal = function (e) { //function inverse de openModal, pour fermer l
     e.preventDefault(); //evite le rechargement par defaut de la page
     modal.style.display = "none"; // masque la boite modal
     modal.setAttribute('aria-hidden', 'true'); // l'element est masqué
-    target.removeAttribute('aria-modal');
+    modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal); // suprime l'event listener
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);// supprime l'event listener pour nettoyer la boite modale completement
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);// supprimer pour nettoyer boite modale au close
@@ -41,3 +41,35 @@ window.addEventListener('keydown', function (e) {
     }
 
 })
+
+// gestion de l'affichage et supression de projet dans la modale
+const modalGallery = document.querySelector('.modal-gallery');
+console.log(modalGallery);
+
+async function displayModalGallery() {
+    // modalGallery.innerHTML = ""; //reset la gallerie (efface les projets)
+    const modalGalleryContent = await getWorks();
+    console.log(modalGalleryContent);
+    modalGalleryContent.forEach(work => {
+        const figure = document.createElement("figure");
+        const img =document.createElement("img");
+        // const span = document.createElement("span");
+        const trashContainer = document.createElement("div");
+        const trash =document.createElement("i");
+
+        trash.classList.add("fa-solid", "fa-trash-can");
+        figure.classList.add("figure-modal");
+
+        trash.id = work.id;
+        img.src = work.imageUrl
+
+        modalGallery.appendChild(figure);
+        figure.appendChild(trashContainer);
+        figure.appendChild(img);
+        trashContainer.appendChild(trash);
+
+        
+        
+    });
+}
+displayModalGallery();
