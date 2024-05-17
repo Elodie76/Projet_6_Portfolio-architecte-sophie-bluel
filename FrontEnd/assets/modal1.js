@@ -57,6 +57,7 @@ async function displayModalGallery() {
         const trashContainer = document.createElement("div");
         const trash =document.createElement("i");
 
+        trashContainer.classList.add("trash-container");
         trash.classList.add("fa-solid", "fa-trash-can");
         figure.classList.add("figure-modal");
 
@@ -66,10 +67,43 @@ async function displayModalGallery() {
         modalGallery.appendChild(figure);
         figure.appendChild(trashContainer);
         figure.appendChild(img);
-        trashContainer.appendChild(trash);
-
-        
-        
+        trashContainer.appendChild(trash);  
     });
+    deleteWork();
 }
 displayModalGallery();
+
+//Supprimer un projet dans la maodale
+
+function deleteWork() {
+    const trashAll = document.querySelectorAll(".fa-trash-can");
+    trashAll.forEach(trash => {
+        trash.addEventListener("click",(e)=>{
+            const id = trash.id
+            const init ={
+                method: "DELETE",
+                Headers: {"content-Type":"application/json"},
+            }
+            fetch("http://localhost:5678/api/works/" +id,init)
+            .then((response)=>{
+                if (!response.ok) {
+                    console.log("la suppréssion a échouée !");
+                    return Promise.reject("La suppression a échoué !");
+                
+                }
+                return response.json(); //data
+            })
+            .then((data)=>{
+                console.log("suppression réussie" ,data);
+                displayModalGallery();// si réussi affiche (reactualise) la gallerie de la modale
+                displayWorks();// et réactualise l'affichage des projets
+            })
+            .catch((error) => {
+                console.error("Erreur lors de la suppression :", error);
+            });
+            
+
+        })
+    });
+}
+deleteWork();

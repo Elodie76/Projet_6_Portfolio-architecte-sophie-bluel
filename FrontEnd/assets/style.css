@@ -200,7 +200,7 @@ background: rgba(0, 0, 0, 0.3);
 
 .modal-title{
 	color: black;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 	font-family: var(--font-familly-content) ;
 	font-weight: 100;
 }
@@ -212,6 +212,26 @@ background: rgba(0, 0, 0, 0.3);
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 30px;
+	border-bottom: solid 1px rgb(168, 167, 167);
+	padding-bottom: 60px;
+	margin-bottom: 20px;
+	margin-top:15px;
+}
+.trash-container{
+	
+	position: relative;
+	text-align: center;
+	top: 22px;
+	right: -58px;
+	border-radius: 3px;
+	background-color: black;
+	width: 17px;
+	height: 17px;
+}
+.fa-trash-can{
+	vertical-align: middle;
+	color: #FFFCF4;
+	font-size: 10px;
 	
 }
 .modal-gallery img{
@@ -230,6 +250,7 @@ background: rgba(0, 0, 0, 0.3);
 	display: flex;
 	justify-content: right;
 	margin-bottom: 20px;
+	font-size: 1rem;
 	
 }
 .filter_container{
