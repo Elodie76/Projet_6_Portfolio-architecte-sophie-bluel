@@ -75,19 +75,21 @@ displayModalGallery();
 
 //Supprimer un projet dans la maodale
 
-function deleteWork() {
+ function deleteWork() {
     const trashAll = document.querySelectorAll(".fa-trash-can");
     trashAll.forEach(trash => {
         trash.addEventListener("click",(e)=>{
             const id = trash.id
+            const token = localStorage.getItem('token');
             const init ={
                 method: "DELETE",
-                Headers: {"content-Type":"application/json"},
+                Headers: {'accept':'application/json',
+                         'Autorization':`Bearer ${token}`
             }
-            fetch("http://localhost:5678/api/works/" +id,init)
+        };
+             fetch(`http://localhost:5678/api/works/${id}`,init)
             .then((response)=>{
                 if (!response.ok) {
-                    console.log("la suppréssion a échouée !");
                     return Promise.reject("La suppression a échoué !");
                 
                 }
