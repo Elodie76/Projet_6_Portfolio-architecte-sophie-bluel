@@ -4,15 +4,33 @@ let index = 0;
 const gallery = document.querySelector(".gallery");
 gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
+
 // console.log(portfolio);
 const filters = document.createElement("div"); //creer le conteneur des filtres
 filters.classList.add("filter_container");
+
 // console.log(filters);
+
 const btnModifier = document.querySelector(".btn_modifier");
 console.log(btnModifier);
 
 portfolio.appendChild(filters);
-portfolio.insertBefore(filters, gallery); //place l'élément filtres avant la galerie du conteneur portfolio
+
+
+// **weight menu buttons**
+function menuBtnStyle() {
+  const menuBtn = document.querySelectorAll("nav a");
+  console.log(menuBtn);
+  menuBtn.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+console.log("j'ai clické");
+  })
+});
+}
+menuBtnStyle();
+
+
+
 
 //appel a l'API pour récupéerer dynamiquement les projets de l'architecte (les Works).
 async function getWorks() {
@@ -132,18 +150,49 @@ filterCategory();
 // Si utilisateur connecté
 
 const logOutBtn = document.querySelector(".log_out");
+const logInBtn = document.querySelector(".log_in");
+const editionModeBanner = document.querySelector(".edition-mode-banner");
 
 document.addEventListener('DOMContentLoaded', function() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-      // Rediriger vers la page de login si aucun token n'est trouvé
-      // window.location.href = './log_in.html';
+
+  if(localStorage.getItem('token') !=null) {
+    console.log(localStorage);
+    // Mise à jour du visuel du site
+    filters.classList.remove('filter_container');
+
+    logOutBtn.style.display = null;
+    editionModeBanner.style.display = null;
+
+    logInBtn.style.display = "none";
+    btnModifier.style.display = null;
+    filters.classList.add('hidden');
+    console.log(filters);
+
   } else {
-      // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
-      console.log("vous etes connecté");
-      logOutBtn.textContent = "Logout";
-      btnModifier.classList.remove("loged-content");
-      
+    
   }
 });
 
+function logOut() {
+
+  logOutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log("j'ai clické sur logout");
+
+    localStorage.removeItem("token");
+    logOutBtn.style.display = null;
+    editionModeBanner.style.display = "none";
+    btnModifier.style.display = "none";
+    
+    
+    logInBtn.style.display = "flex";
+    
+    filters.classList.add('filter_container');
+
+    console.log("je suis déconnecté");
+    
+    
+  });
+  
+};
+logOut();

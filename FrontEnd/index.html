@@ -16,13 +16,19 @@
 </head>
 
 <body>
+	
 	<header>
+		<div class="edition-mode-banner" style="display: none;">
+			<i class="fa-regular fa-pen-to-square"></i>
+			<p>Mode édition</p>
+		</div>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
-				<li><a href="">projets</a></li>
-				<li><a href="">contact</a></li>
-				<li><a class="log_out" href="./log_in.html">login</a></li>
+				<li><a  href="">projets</a></li>
+				<li><a  href="">contact</a></li>
+				<li><a class="log_in "  style="display:flex;" href="./log_in.html">login</a></li>
+				<li><a class="log_out " style="display: none;" href="">logout</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -47,38 +53,63 @@
 			<div>
 				<div class="order-title-projets">
 					<h2>Mes Projets</h2>
-					<a class="btn_modifier loged-content js-modal"  href="#modal1"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+					<a class="btn_modifier js-modal" style="display: none;"  href="#modal1"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
 				</div>
 				
 				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titlemodal" style="display: none;">
-				<div class="modal-wrapper modal-vue1 js-modal-stop" style="display: none;">
-					<button class="js-modal-close"><p class="hidden-text">Fermer la boite modale</p><i class="fa-solid fa-xmark"></i></button>
-					<h2 id="titlemodal" class="modal-title">Galerie photo</h2>
-					<div class="modal-gallery"></div>
-					<input class="btn-go-vue2" type="submit" value="Ajouter une photo">
-				</div >
-				<div class="modal-wrapper modal-vue2 js-modal-stop" style="display: none;">
-					<button class="js-modal-close"><p class="hidden-text">Fermer la boite modale</p><i class="fa-solid fa-xmark"></i></button>
-					<button class="js-modal-return"><p class="hidden-text">Retour sur la modale gallerie </p><i class="fa-solid fa-arrow-left"></i></button>
-					<div class="vue2-content">
-						<div class="add-img">
-							<i class="fa-regular fa-image"></i>
-							<button class="add-img-btn">+ Ajouter photo</button>
-							<p class="add-img-txt">jpg, png : 4mo max</p>
+					<div class="modal-wrapper js-modal-stop">
+						<div class="modal-vue1">
+							<div class="modale-btns">
+								<button class="js-modal-return visibility">
+									<p class="hidden">Retour sur la modale gallerie </p>
+									<i class="fa-solid fa-arrow-left"></i>
+								</button>
+								<button class="js-modal-close">
+									<p class="hidden">Fermer la boite modale</p>
+									<i class="fa-solid fa-xmark "></i>
+								</button>
+							</div>
+							<div class="modale-content">
+								<h2 id="titlemodal" class="modal-title">Galerie photo</h2>						
+								<div class="modal-gallery"></div>	
+								<div class="greyline"></div>						
+								<input class="btn-go-vue2" type="submit" value="Ajouter une photo">
+							</div>
+						</div>	
+
+						<div class="modal-vue2 hidden ">
+							<div class="modale-btns">
+								<button class="js-modal-return">
+									<p class="hidden">Retour sur la modale gallerie </p>
+									<i class="fa-solid fa-arrow-left"></i>
+								</button>
+								<button class="js-modal-close">
+									<p class="hidden">Fermer la boite modale</p>
+									<i class="fa-solid fa-xmark "></i>
+								</button>
+							</div>	
+							<div class="modale-content">
+								<h2 id="titlemodal" class="modal-title">Ajout photo</h2>
+								<form class="modale-content-form">
+									<div class="bloc-add-img">
+										<i class="fa-regular fa-image"></i>
+										<label class="add-img-btn" for="file">+ Ajouter photo</label>
+										<input class="hidden" type="file" id="file" name="image">
+										<img class="hidden" src="#" alt="Aperçut de l'image">
+										<p class="add-img-txt">jpg, png : 4mo max</p>
+									</div>
+									<label for="img-title">Titre</label><br>
+									<input class="inputModale" id="img-title" type="text"><br>
+									<label for="Catégorie">Catégorie</label><br>
+									<select class="inputModale" name="Catégorie" id="Catégorie-select"></select><br>
+									<div class="greyline"></div>
+									<button class="btn-valider-ajout" >Valider</button>								
+								</form>
+							</div>
 						</div>
-						<form action="submit">
-							<label for="img-title">Titre</label><br>
-							<input id="img-title" type="text"><br>
-							<label for="Catégorie">Catégorie</label><br>
-							<select name="Catégorie" id="Catégorie-select"><br>	
-							<input class="btn-valider-ajout" type="submit" value="Valider"><br>
-						</form>
+				
 					</div>
-					
-				</div>
-			</aside>
-			</div>
-			
+				</aside>
 			<div class="gallery">
 			</div>
 		</section>

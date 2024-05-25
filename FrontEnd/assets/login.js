@@ -32,6 +32,7 @@ async function fetchUsers() {
       localStorage.setItem('token', data.token);
       // Redirection ou mise à jour de l'interface utilisateur si authentification valide
       window.location.href = './index.html';
+
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -64,18 +65,7 @@ function validatePassword(password) {
     const userPwd = balisePassword.value;
     console.log(userEmail, userPwd);
 
-  //    if (!validateEmail(userEmail)) {
-  //     errorMessage.textContent = "L'adresse mail n'est pas valide.";
-  //     return;
-  //     baliseEmail.classList.add("input_error");
-      
-  // }
-  //   if (!validatePassword(userPwd)) {
-  //     errorMessage.textContent = 'Le mot de passe ne correspond pas.';
-  //     return;
-  //     balisePassword.classList.add("input_error");
 
-  //   }else{
       const responseBody = await fetchUsers();
       console.log(responseBody);
   // }
@@ -87,33 +77,7 @@ function validatePassword(password) {
 
 login();
 
-//Si utilisateur connecté
-
-const logOutBtn = document.querySelector(".log_out");
-console.log(logOutBtn);
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const token = localStorage.getItem('token');
-  
-  
-  if (!token) {
-      // Rediriger vers la page de login si aucun token n'est trouvé
-      // window.location.href = './log_in';
-  } else {
-      // Vous pouvez également vérifier la validité du token en envoyant une requête au serveur
-      console.log("Vous êtes déja connecté");
-      logOutBtn.textContent = "Logout";
-      logOutBtn.classListadd("log_out");
 
 
-  }
-});
-
-const logOut = function (e) {
-  e.preventDefault();
-  logOutBtn.addEventListener('click', (e) => {
-  logOutBtn.classList.remove(log_out); 
-  });
-  
-};

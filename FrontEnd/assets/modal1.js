@@ -16,6 +16,7 @@ const openModal = function (e) {
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);// ajout du stop propagation a l'element parent du bouton close
     modal.querySelector('.btn-go-vue2').addEventListener('click', openVue2);//passer sur la vue 2 ajouter une photo
+    
 }
 
 const closeModal = function (e) { //function inverse de openModal, pour fermer la modal
@@ -23,19 +24,27 @@ const closeModal = function (e) { //function inverse de openModal, pour fermer l
     e.preventDefault(); //evite le rechargement par defaut de la page
     modal.style.display = "none"; // masque la boite modal
     vue1.style.display = "none";
-    vue2.style.display = "none";
     modal.setAttribute('aria-hidden', 'true'); // l'element est masqué
     modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal); // suprime l'event listener
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);// supprime l'event listener pour nettoyer la boite modale completement
-    modal.querySelectorAll('.js-modal-stop').removeEventListener('click', stopPropagation);// supprimer pour nettoyer boite modale au close
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);// supprimer pour nettoyer boite modale au close
     modal.querySelector('.btn-go-vue2').removeEventListener('click', openVue2);//passer sur la vue 2 ajouter une photo
     modal = null // remet modal a null car fermé
+    displayWorks();
 }
 
 const stopPropagation = function (e) { //fonction qui empeche la propagation de l'evenement vers les parents donc de maintenanit l'evenement du click sur la croix pour fermer la modale
     e.stopPropagation();
 }
+//Fermer la modale avec touche echap
+window.addEventListener('keydown', function (e) {
+    // console.log(e.key); // connaitre le nom de la touche tappée
+    if (e.key === "Escape" || e.key === "Esc") {
+        closeModal(e);
+    }
+
+})
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click' , openModal);  // au click sur le lien, declanche la fonction
     
@@ -45,26 +54,32 @@ document.querySelectorAll('.js-modal').forEach(a => {
 const openVue2 = function (e) {
     e.preventDefault(); //evite le rechargement par defaut de la page
     
-    vue1.style.display = "none";
-    vue2.style.display = null;
+
+    vue1.classList.add("hidden");
+    vue2.classList.remove("hidden");
 
    
-    vue2.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);// ajout du stop propagation a l'element parent du bouton close
-    // vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
+    vue2.querySelector('.js-modal-return').addEventListener('click', returnToModal1);
+    vue2.addEventListener('click', stopPropagation);// ajout du stop propagation a l'element parent du bouton close
+    vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
 }
 
-//Fermer la modale avec touche echap
-window.addEventListener('keydown', function (e) {
-    // console.log(e.key); // connaitre le nom de la touche tappée
-    if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e);
-    }
+function returnToModal1() {
+    vue2.classList.add("hidden");
+    vue1.classList.remove("hidden");
+}
 
+// Previsualisation de l'image
+const imgPreview = document.querySelector(".bloc-add-img img");
+const fileInput = document.querySelector(".bloc-add-img input");
+const fileLabel = document.querySelector(".bloc-add-img label");
+const fileIcon = document.querySelector(".bloc-add-img .fa-image");
+const fileP = document.querySelector(".bloc-add-img p");
+
+fileInput.addEventListener("change",()=>{
+    const file = fileInput.files[0]; //recupère la donnée dans l'input
+    console.log(file);
 })
-
-
-
-
 
 
 
@@ -75,7 +90,7 @@ const modalGallery = document.querySelector('.modal-gallery');
 console.log(modalGallery);
 
 async function displayModalGallery() {
-    // modalGallery.innerHTML = ""; //reset la gallerie (efface les projets)
+    modalGallery.innerHTML = ""; //reset la gallerie (efface les projets)
     const modalGalleryContent = await getWorks();
     console.log(modalGalleryContent);
     modalGalleryContent.forEach(work => {
@@ -84,6 +99,7 @@ async function displayModalGallery() {
         // const span = document.createElement("span");
         const trashContainer = document.createElement("div");
         const trash =document.createElement("i");
+        console.log(trash);
 
         trashContainer.classList.add("trash-container");
         trash.classList.add("fa-solid", "fa-trash-can");
@@ -111,8 +127,8 @@ displayModalGallery();
             const token = localStorage.getItem('token');
             const init ={
                 method: 'DELETE',
-                Headers: {'accept':'application/json',
-                         'Autorization':`Bearer ${token}`
+                headers: {'accept':'application/json',
+                         'authorization':`Bearer ${token}`
             }
         };
              fetch(`http://localhost:5678/api/works/${id}`,init)
@@ -121,10 +137,11 @@ displayModalGallery();
                     return Promise.reject("La suppression a échoué !");
                 
                 }
-                return response.json(); //data
+                return response.text().then(text => text ? JSON.parse(text) : {});
             })
             .then((data)=>{
-                console.log("suppression réussie" ,data);
+                console.log("suppression réussie :" ,data);
+
                 displayModalGallery();// si réussi affiche (reactualise) la gallerie de la modale
                 displayWorks();// et réactualise l'affichage des projets
             })
@@ -136,4 +153,3 @@ displayModalGallery();
         })
     });
 }
-deleteWork();
