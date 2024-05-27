@@ -217,10 +217,10 @@ background: rgba(0, 0, 0, 0.3);
 .modale-content-form{
 	display: flex;
 	flex-direction: column;
-	
-	
 }
-
+.modal-content > .errorMessage{
+	color: red;
+}
 .modal-title{
 	color: black;
 	font-size: 1.5rem;
@@ -309,6 +309,10 @@ background: rgba(0, 0, 0, 0.3);
 	gap: 10px;
 	border-radius: 5px;
 	margin-bottom: 30px;
+}
+.bloc-add-img img{
+	width: 50%;
+	height: 50%;
 }
 .fa-image{
 	font-size: 4.5rem;

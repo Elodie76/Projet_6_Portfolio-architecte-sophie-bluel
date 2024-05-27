@@ -6,7 +6,7 @@ const vue2 = document.querySelector('.modal-vue2');
 const openModal = function (e) {
     e.preventDefault(); //evite le rechargement par defaut de la page  
     const target = document.querySelector(e.target.getAttribute('href')); //selectionne les liens de modal
-    console.log(target);
+    // console.log(target);
     target.style.display = null; // affiche la boite modal, retire le display none,  display flex prend la relais
     vue1.style.display = null;
     target.removeAttribute('aria-hidden'); // l'element redevient visible
@@ -73,33 +73,123 @@ function returnToModal1() {
 const imgPreview = document.querySelector(".bloc-add-img img");
 const fileInput = document.querySelector(".bloc-add-img input");
 const fileLabel = document.querySelector(".bloc-add-img label");
-const fileIcon = document.querySelector(".bloc-add-img .fa-image");
+const fileIcon = document.querySelector(".bloc-add-img i.fa-image");
 const fileP = document.querySelector(".bloc-add-img p");
+
+//précharger l'image et l'afficher dans une balise -> process
 
 fileInput.addEventListener("change",()=>{
     const file = fileInput.files[0]; //recupère la donnée dans l'input
-    console.log(file);
+    // console.log(file);
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imgPreview.src = e.target.result;
+            imgPreview.classList.remove("hidden");
+            fileLabel.classList.add("hidden");
+            fileIcon.classList.add("hidden");
+            fileIcon.ariaHidden = "false";
+            fileP.classList.add("hidden");
+        }
+        reader.readAsDataURL(file);
+    }
 })
+// Créer une list de catégorie pour l'input select
+async function displayCategoryModal() {
+    const select = document.querySelector(".modale-content #Catégorie-select");
+    const categorys = await getCategorys();
+    categorys.forEach(category => {
+        const option = document.createElement("option");
+        // console.log(option);
+        option.value = category.id;
+        option.textContent = category.name
+        select.appendChild(option);
+    });
+}
+displayCategoryModal();
 
 
+// Ajouter un projet en methode POST
+
+const form = document.querySelector(".modale-content form");
+const title = document.querySelector(".modale-content #img-title");
+const category = document.querySelector(".modale-content #Catégorie-select")
+const token = localStorage.getItem('token');
+
+
+
+
+form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+     // Création d'un objet FormData et ajout des éléments du formulaire
+//   const formData = new FormData();
+//   formData.append("imageUrl", imgPreview.src); // Ajout de l'image
+//   formData.append("title", title.value); // Ajout du titre
+//   formData.append("categoryId", category.value); // Ajout de la catégorie
+
+  const formData = {
+    title:title.value,
+    categoryId:category.value,
+    imageUrl:imgPreview.src
+  };
+
+  console.log("FormData:", formData);
+//   for (let pair of formData.entries()) {
+//     console.log(pair[0]+ ': ' + pair[1]); 
+//   };
+    
+    const errorMessage = document.querySelector(".modale-content .errorMessage");
+
+
+    if (file.size > 4000000) { // Limite de 4 Mo 
+        console.error("Le fichier est trop grand ! (4mo max)");
+        errorMessage.innerHTML = "Le fichier est trop grand ! (4mo max)";
+        return;
+     }
+
+    await fetch ("http://localhost:5678/api/works",{
+        method:"POST",
+        body:JSON.stringify(formData),
+        headers:{
+            'Authorization': `Bearer ${token}`,
+            "content-Type":"application/json"
+            // ChatGpt : Assurez-vous de ne pas définir le content-Type dans les en-têtes 
+            //           pour les formulaires multipart/form-data. Cela sera automatiquement défini par le navigateur.
+        }
+    })
+
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Erreur lors de l'ajout du projet : " + response.status);
+        }
+        return response.json();
+    }) //retourne une réponse au format json
+
+    .then(data=>{
+        console.log(data);//trouve les données la la reponse et les affiche dans le console log
+        console.log("Nouveau projet ajouté :",data);
+        displayModalGallery();//affiche les projets dans la modale
+        displayWorks();//affiche les projets dans la galerie de la page d'accueil
+    })
+})
 
 
 
 // gestion de l'affichage et supression de projet dans la modale
 const modalGallery = document.querySelector('.modal-gallery');
-console.log(modalGallery);
+// console.log(modalGallery);
 
 async function displayModalGallery() {
     modalGallery.innerHTML = ""; //reset la gallerie (efface les projets)
     const modalGalleryContent = await getWorks();
-    console.log(modalGalleryContent);
+    // console.log(modalGalleryContent);
     modalGalleryContent.forEach(work => {
         const figure = document.createElement("figure");
         const img =document.createElement("img");
         // const span = document.createElement("span");
         const trashContainer = document.createElement("div");
         const trash =document.createElement("i");
-        console.log(trash);
+        // console.log(trash);
 
         trashContainer.classList.add("trash-container");
         trash.classList.add("fa-solid", "fa-trash-can");
