@@ -2,19 +2,23 @@
 //*** Variables ***/
 let index = 0;
 const gallery = document.querySelector(".gallery");
-gallery.classList.add("gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
-
-// console.log(portfolio);
 const filters = document.createElement("div"); //creer le conteneur des filtres
+const btnModifier = document.querySelector(".btn_modifier");
+
+gallery.classList.add("gallery");
 filters.classList.add("filter_container");
 
-// console.log(filters);
-
-const btnModifier = document.querySelector(".btn_modifier");
-console.log(btnModifier);
-
 portfolio.appendChild(filters);
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (sectionPortfolio && filters && gallery) {
+    // Insérer le conteneur de filtre entre le titre et la galerie
+    sectionPortfolio.insertBefore(filters, gallery);
+} else {
+    console.error('Un ou plusieurs éléments sont introuvables dans le DOM');
+    } 
+  });
 
 
 // **weight menu buttons**
@@ -44,8 +48,9 @@ getWorks();
 // Affichage des Woks dans le dom
 
 async function displayWorks() {
+  
   const arrayWorks = await getWorks();
- 
+  arrayWorks.innerHTML = "";
   arrayWorks.forEach((work) => {
     createWorks(work);
   });
@@ -76,10 +81,13 @@ async function getCategorys() {
 
 //**creer le bouton de reset des filtres**
 const btnTous = document.createElement("button");
-console.log(btnTous);
+
+
 btnTous.textContent = "Tous";
 btnTous.id = 0;
+
 filters.appendChild(btnTous);
+
 btnTous.classList.add("filter");
 
 
@@ -140,7 +148,7 @@ async function filterCategory() {
        
         displayWorks();
       }
-      console.log(btnId);
+      
     });
   });
 }
@@ -180,7 +188,7 @@ function logOut() {
     console.log("j'ai clické sur logout");
 
     localStorage.removeItem("token");
-    logOutBtn.style.display = null;
+    logOutBtn.style.display = "none";
     editionModeBanner.style.display = "none";
     btnModifier.style.display = "none";
     
@@ -188,6 +196,7 @@ function logOut() {
     logInBtn.style.display = "flex";
     
     filters.classList.add('filter_container');
+    filters.classList.remove('hidden');
 
     console.log("je suis déconnecté");
     
@@ -196,3 +205,4 @@ function logOut() {
   
 };
 logOut();
+

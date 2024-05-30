@@ -22,6 +22,7 @@
 			<i class="fa-regular fa-pen-to-square"></i>
 			<p>Mode édition</p>
 		</div>
+		<div class="navbar">
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
@@ -32,6 +33,8 @@
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
+		</div>
+		
 	</header>
 	<main>
 		<section id="introduction">
@@ -50,12 +53,12 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<div>
 				<div class="order-title-projets">
 					<h2>Mes Projets</h2>
 					<a class="btn_modifier js-modal" style="display: none;"  href="#modal1"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
 				</div>
 				
+				<div class="gallery"></div>
 				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titlemodal" style="display: none;">
 					<div class="modal-wrapper js-modal-stop">
 						<div class="modal-vue1">
@@ -89,10 +92,10 @@
 								</button>
 							</div>	
 							<div class="modale-content">
-								<h2 id="titlemodal" class="modal-title">Ajout photo</h2>
-								<form class="modale-content-form">
+								<h2  class="modal-title">Ajout photo</h2>
+								<form id="addProjectForm" class="modale-content-form">
 									<div class="bloc-add-img">
-										<i class="fa-regular fa-image"></i>
+										<i id="fileIcon" class="fa-regular fa-image"></i>
 										<label class="add-img-btn" for="file">+ Ajouter photo</label>
 										<input class="hidden" type="file" id="file" name="image">
 										<img class="hidden" src="#" alt="Aperçut de l'image">
@@ -104,14 +107,15 @@
 									<select class="inputModale" name="Catégorie" id="Catégorie-select"></select><br>
 									<div class="greyline"></div>
 									<p class="errorMessage"></p>
-									<button class="btn-valider-ajout" >Valider</button>								
+									<button id="btn-valider-ajout" class="btn-valider-ajout" disabled >Valider</button>								
 								</form>
 							</div>
 						</div>
 				
 					</div>
 				</aside>
-			<div class="gallery">
+				
+			
 			</div>
 		</section>
 		<section id="contact">
@@ -124,7 +128,7 @@
 				<input type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
-				<input type="submit" value="Envoyer">
+				<input class="btn-hover" type="submit" value="Envoyer">
 			</form>
 		</section>
 	</main>
