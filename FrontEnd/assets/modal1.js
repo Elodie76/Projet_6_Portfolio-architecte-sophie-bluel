@@ -1,6 +1,7 @@
 let modal = null; // Variable qui permet de savoir quelle est la boite modal qui est ouverte (pour gerer la fermeture)
 const vue1 = document.querySelector('.modal-vue1');
 const vue2 = document.querySelector('.modal-vue2');
+const btnValiderForm = document.getElementById("btn-valider-ajout");
 
 
 const openModal = function (e) {
@@ -56,7 +57,6 @@ document.querySelectorAll('.js-modal').forEach(a => {
 const openVue2 = function (e) {
     e.preventDefault(); //evite le rechargement par defaut de la page
     
-
     vue1.classList.add("hidden");
     vue2.classList.remove("hidden");
 
@@ -64,6 +64,11 @@ const openVue2 = function (e) {
     vue2.querySelector('.js-modal-return').addEventListener('click', returnToModal1);
     vue2.addEventListener('click', stopPropagation);
     vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);
+
+
+
+
+
 }
 
 //retour de modale 2 a modale 1
@@ -115,20 +120,11 @@ async function displayCategoryModal() {
 }
 displayCategoryModal();
 
+ // Verrifier si tous les inputs sont rempli
 
-
-// Ajouter un projet en methode POST
-
-const form = document.querySelector(".modale-content form");
-const title = document.querySelector(".modale-content #img-title");
-const category = document.querySelector(".modale-content #Catégorie-select");
-const token = localStorage.getItem('token');
-const errorMessage = document.querySelector(".modale-content .errorMessage");
-
-// Verrifier si tous les inputs sont rempli
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
     function inputsCheckUp() {
-        const btnValiderForm = document.getElementById("btn-valider-ajout");
+        
         
         form.addEventListener("input",()=>{           
             if (title.value !== "" && category.value !== "" && fileInput.value !== "") {
@@ -146,6 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     inputsCheckUp();
 });
+
+// Ajouter un projet en methode POST
+
+const form = document.querySelector(".modale-content form");
+const title = document.querySelector(".modale-content #img-title");
+const category = document.querySelector(".modale-content #Catégorie-select");
+const token = localStorage.getItem('token');
+const errorMessage = document.querySelector(".modale-content .errorMessage");
+
+
 
 form.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -185,6 +191,7 @@ form.addEventListener("submit", async (e)=>{
         fileLabel.classList.remove("hidden");
         fileIcon.classList.remove("visibility");
         fileP.classList.remove("hidden");
+        btnValiderForm.classList.remove("hover-effect");
         
         gallery.innerHTML = "";
         displayModalGallery();
@@ -202,9 +209,12 @@ form.addEventListener("submit", async (e)=>{
 // Fonction closeModal sans événement
 const closeModalWithoutEvent = function () {
     if (modal === null) return;
-    modal.style.display = "none"; // masque la boite modal
+    vue2.classList.add("hidden");
+    vue1.classList.remove("hidden");
+    modal.style.display = "none";
     vue1.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true'); // l'element est masqué
+    vue2.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
@@ -286,20 +296,3 @@ displayModalGallery();
     });
 }
 
-// Verrifier si tous les inputs sont rempli
-function inputsCheckUp() {
-    const btnValiderForm = document.getElementById("btn-valider-ajout");
-    btnValiderForm.classList.add("filter_active");
-    form.addEventListener("input",()=>{
-        if (!title.value == "" && !category.value == "" && !fileInput.value == "") {
-            btnValiderForm.classList.add("filter_active");
-            btnValiderForm.disable = false;
-
-        } else {
-            btnValiderForm.classList.remove("filter_active");
-            btnValiderForm.disable = true;
-        }
-    })
-    
-}
-inputsCheckUp()
