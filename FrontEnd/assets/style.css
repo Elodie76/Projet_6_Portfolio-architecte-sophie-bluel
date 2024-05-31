@@ -339,7 +339,7 @@ background: rgba(0, 0, 0, 0.3);
 	padding: 10px;
 	margin: 0px 20%;
 }
-.btn-valider-ajout:hover{
+.btn-valider-ajout.hover-effect:hover{
 	background-color: #0E2F28;
 }
 

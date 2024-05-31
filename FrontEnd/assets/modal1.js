@@ -129,10 +129,12 @@ document.addEventListener("DOMContentLoaded", () => {
         form.addEventListener("input",()=>{           
             if (title.value !== "" && category.value !== "" && fileInput.value !== "") {
                 btnValiderForm.classList.add("filter_active");
+                btnValiderForm.classList.add("hover-effect");
                 btnValiderForm.disabled = false;
                 
             } else {
                 btnValiderForm.classList.remove("filter_active");
+                btnValiderForm.classList.remove("hover-effect");
                 btnValiderForm.disabled = true;
             }
         });
