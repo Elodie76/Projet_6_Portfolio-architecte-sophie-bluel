@@ -225,6 +225,8 @@ background: rgba(0, 0, 0, 0.3);
 	border-radius: 8px;
 	padding: 20px;
 	
+	
+	
 }
 .modal-vue1, .modal-vue2{
 	display: flex;
@@ -277,10 +279,14 @@ background: rgba(0, 0, 0, 0.3);
 	grid-column-gap: 10px;
 	grid-row-gap: 30px;
 
-	height: auto;
+	height: 450px;
 	width: 90%;
 	
 	padding: 0px 30px 0px 30px;
+
+	max-width: 600px;
+    max-height: 52%;
+    overflow-y: auto
 
 }
 .trash-container{
