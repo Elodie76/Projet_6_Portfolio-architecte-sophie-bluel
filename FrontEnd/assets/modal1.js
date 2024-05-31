@@ -4,32 +4,36 @@ const vue2 = document.querySelector('.modal-vue2');
 
 
 const openModal = function (e) {
-    e.preventDefault(); //evite le rechargement par defaut de la page  
-    const target = document.querySelector(e.target.getAttribute('href')); //selectionne les liens de modal
-    target.style.display = null; // affiche la boite modal, retire le display none,  display flex prend la relais
+    e.preventDefault();
+    const target = document.querySelector(e.target.getAttribute('href'));
+    target.style.display = null;
     vue1.style.display = null;
-    target.removeAttribute('aria-hidden'); // l'element redevient visible
+    vue2.style.display = null;
+    target.removeAttribute('aria-hidden');
     target.setAttribute('aria-modal', 'true');
-    modal = target // sauvegarde la boite modal ouverte
-    modal.addEventListener('click', closeModal); // au click, declanche la fonction closeModal
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
-    modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);// ajout du stop propagation a l'element parent du bouton close
-    modal.querySelector('.btn-go-vue2').addEventListener('click', openVue2);//passer sur la vue 2 ajouter une photo
+    modal = target 
+    modal.addEventListener('click', closeModal);
+    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+    modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+    modal.querySelector('.btn-go-vue2').addEventListener('click', openVue2);
     
 }
 
-const closeModal = function (e) { //function inverse de openModal, pour fermer la modal
-    if (modal === null) return; //Si pas de modal ouverte, le code suivant n'est pas lu
-    e.preventDefault(); //evite le rechargement par defaut de la page
-    modal.style.display = "none"; // masque la boite modal
+const closeModal = function (e) {
+    if (modal === null) return; 
+    e.preventDefault(); 
+    vue2.classList.add("hidden");
+    vue1.classList.remove("hidden");
+    modal.style.display = "none"; 
     vue1.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true'); // l'element est masqué
+    vue2.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
-    modal.removeEventListener('click', closeModal); // suprime l'event listener
-    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);// supprime l'event listener pour nettoyer la boite modale completement
-    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);// supprimer pour nettoyer boite modale au close
-    modal.querySelector('.btn-go-vue2').removeEventListener('click', openVue2);//passer sur la vue 2 ajouter une photo
-    modal = null // remet modal a null car fermé
+    modal.removeEventListener('click', closeModal);
+    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
+    modal.querySelector('.btn-go-vue2').removeEventListener('click', openVue2);
+    modal = null
     displayWorks();
 }
 
