@@ -1,5 +1,3 @@
-
-//*** Variables ***/
 let index = 0;
 const gallery = document.querySelector(".gallery");
 const sectionPortfolio = document.getElementById("portfolio"); // appeler le conteneur de la section portfolio
@@ -24,10 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // **weight menu buttons**
 function menuBtnStyle() {
   const menuBtn = document.querySelectorAll("nav a");
-  console.log(menuBtn);
   menuBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-console.log("j'ai clické");
   })
 });
 }
@@ -164,7 +160,6 @@ const editionModeBanner = document.querySelector(".edition-mode-banner");
 document.addEventListener('DOMContentLoaded', function() {
 
   if(localStorage.getItem('token') !=null) {
-    console.log(localStorage);
     // Mise à jour du visuel du site
     filters.classList.remove('filter_container');
 
@@ -174,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
     logInBtn.style.display = "none";
     btnModifier.style.display = null;
     filters.classList.add('hidden');
-    console.log(filters);
 
   } else {
     
@@ -185,7 +179,6 @@ function logOut() {
 
   logOutBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log("j'ai clické sur logout");
 
     localStorage.removeItem("token");
     logOutBtn.style.display = "none";
@@ -197,12 +190,7 @@ function logOut() {
     
     filters.classList.add('filter_container');
     filters.classList.remove('hidden');
-
-    console.log("je suis déconnecté");
-    
-    
   });
-  
 };
 logOut();
 

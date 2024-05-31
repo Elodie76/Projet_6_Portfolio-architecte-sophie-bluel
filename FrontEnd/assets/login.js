@@ -63,15 +63,7 @@ function validatePassword(password) {
     // On fait la vérification.
     const userEmail = baliseEmail.value;
     const userPwd = balisePassword.value;
-    console.log(userEmail, userPwd);
-
-
-      const responseBody = await fetchUsers();
-      console.log(responseBody);
-  // }
-    
-    
-
+    const responseBody = await fetchUsers();
   });
 }
 

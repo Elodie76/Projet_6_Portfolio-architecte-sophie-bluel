@@ -6,7 +6,6 @@ const vue2 = document.querySelector('.modal-vue2');
 const openModal = function (e) {
     e.preventDefault(); //evite le rechargement par defaut de la page  
     const target = document.querySelector(e.target.getAttribute('href')); //selectionne les liens de modal
-    // console.log(target);
     target.style.display = null; // affiche la boite modal, retire le display none,  display flex prend la relais
     vue1.style.display = null;
     target.removeAttribute('aria-hidden'); // l'element redevient visible
@@ -39,7 +38,6 @@ const stopPropagation = function (e) { //fonction qui empeche la propagation de 
 }
 //Fermer la modale avec touche echap
 window.addEventListener('keydown', function (e) {
-    // console.log(e.key); // connaitre le nom de la touche tappée
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     }
@@ -64,9 +62,11 @@ const openVue2 = function (e) {
     vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
 }
 
+//retour de modale 2 a modale 1
 function returnToModal1() {
     vue2.classList.add("hidden");
     vue1.classList.remove("hidden");
+    displayWorks();
 }
 
 // Previsualisation de l'image
@@ -84,7 +84,6 @@ const fileP = document.querySelector(".bloc-add-img p");
 
 fileInput.addEventListener("change",()=>{
     const file = fileInput.files[0]; //recupère la donnée dans l'input
-    // console.log(file);
     if (file) {
             
         const reader = new FileReader();
@@ -105,7 +104,6 @@ async function displayCategoryModal() {
     const categorys = await getCategorys();
     categorys.forEach(category => {
         const option = document.createElement("option");
-        // console.log(option);
         option.value = category.id;
         option.textContent = category.name
         select.appendChild(option);
@@ -125,17 +123,11 @@ const errorMessage = document.querySelector(".modale-content .errorMessage");
 
 // Verrifier si tous les inputs sont rempli
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM fully loaded and parsed");
     function inputsCheckUp() {
         const btnValiderForm = document.getElementById("btn-valider-ajout");
         
-        form.addEventListener("input",()=>{
-            console.log("Title:", title.value);
-            console.log("Category:", category.value);
-            console.log("File Input:", fileInput.value);
-            
+        form.addEventListener("input",()=>{           
             if (title.value !== "" && category.value !== "" && fileInput.value !== "") {
-                console.log("tous les champs sont rempli");
                 btnValiderForm.classList.add("filter_active");
                 btnValiderForm.disabled = false;
                 
@@ -151,31 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 form.addEventListener("submit", async (e)=>{
     e.preventDefault();
-     // Création d'un objet FormData et ajout des éléments du formulaire
+    
     let formData = new FormData();
 
-        formData.append("image", fileInput.files[0]); // Ajout de l'image
-        formData.append("title", title.value); // Ajout du titre
-        formData.append("category", category.value); // Ajout de la catégorie
+        formData.append("image", fileInput.files[0]);
+        formData.append("title", title.value);
+        formData.append("category", category.value);
 
-        // console.log("FormData:", formData);
-        //     for (let pair of formData.entries()) {
-        //     console.log(pair[0]+ ': ' + pair[1]); 
-        //     };
-
-        // formData = {
-        //     title:formData.get("title"),
-        //     category:formData.get("category"),
-        //     image:formData.get("image")
-        // };
-        // console.log("formData :",formData);
-
-    
-    // if (inputsCheckUp) {
-    //     return
-    // }
-
-    if (fileInput.files[0].size > 4000000) { // Limite de 4 Mo 
+    if (fileInput.files[0].size > 4000000) {
         console.error("Le fichier est trop grand ! (4mo max)");
         errorMessage.innerHTML = "Le fichier est trop grand ! (4mo max)";
         return;
@@ -196,18 +171,17 @@ form.addEventListener("submit", async (e)=>{
         if (!response.ok) {
             throw new Error("Erreur lors de l'ajout du projet : " + response.status);
         }
-
         const data = await response.json();
         console.log("Nouveau projet ajouté :",data);
         form.reset();
-        imgPreview.classList.add("hidden"); // Réinitialiser l'aperçu de l'image
-        imgPreview.src = ""; // Réinitialiser la source de l'image
-        fileLabel.classList.remove("hidden"); // Réafficher les labels et les icônes
+        imgPreview.classList.add("hidden");
+        imgPreview.src = ""; 
+        fileLabel.classList.remove("hidden");
         fileIcon.classList.remove("visibility");
         fileP.classList.remove("hidden");
         
         gallery.innerHTML = "";
-        displayModalGallery();//affiche les projets dans la modale
+        displayModalGallery();
         
         
         
@@ -237,19 +211,17 @@ const closeModalWithoutEvent = function () {
 
 // gestion de l'affichage et supression de projet dans la modale
 const modalGallery = document.querySelector('.modal-gallery');
-// console.log(modalGallery);
 
 async function displayModalGallery() {
-    modalGallery.innerHTML = ""; //reset la gallerie (efface les projets)
+    modalGallery.innerHTML = "";
+
     const modalGalleryContent = await getWorks();
-    // console.log(modalGalleryContent);
+
     modalGalleryContent.forEach(work => {
         const figure = document.createElement("figure");
         const img =document.createElement("img");
-        // const span = document.createElement("span");
         const trashContainer = document.createElement("div");
         const trash =document.createElement("i");
-        // console.log(trash);
 
         trashContainer.classList.add("trash-container");
         trash.classList.add("fa-solid", "fa-trash-can");
@@ -311,11 +283,9 @@ displayModalGallery();
 // Verrifier si tous les inputs sont rempli
 function inputsCheckUp() {
     const btnValiderForm = document.getElementById("btn-valider-ajout");
-    console.log(btnValiderForm);
     btnValiderForm.classList.add("filter_active");
     form.addEventListener("input",()=>{
         if (!title.value == "" && !category.value == "" && !fileInput.value == "") {
-            console.log("tous les champs sont rempli");
             btnValiderForm.classList.add("filter_active");
             btnValiderForm.disable = false;
 
