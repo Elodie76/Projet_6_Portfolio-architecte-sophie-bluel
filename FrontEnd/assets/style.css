@@ -328,6 +328,9 @@ background: rgba(0, 0, 0, 0.3);
 	visibility: hidden;
 	position: absolute;
 }
+.invisible{
+	color: transparent;
+}
 .modale-btns{
 	display: flex;
 	justify-content: space-between;

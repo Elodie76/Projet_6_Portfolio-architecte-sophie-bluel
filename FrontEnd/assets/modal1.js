@@ -62,8 +62,8 @@ const openVue2 = function (e) {
 
    
     vue2.querySelector('.js-modal-return').addEventListener('click', returnToModal1);
-    vue2.addEventListener('click', stopPropagation);// ajout du stop propagation a l'element parent du bouton close
-    vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);// la boite modale se ferme au click (n'importe où)
+    vue2.addEventListener('click', stopPropagation);
+    vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);
 }
 
 //retour de modale 2 a modale 1
