@@ -1,7 +1,19 @@
-let modal = null; // Variable qui permet de savoir quelle est la boite modal qui est ouverte (pour gerer la fermeture)
+let modal = null;
 const vue1 = document.querySelector('.modal-vue1');
 const vue2 = document.querySelector('.modal-vue2');
 const btnValiderForm = document.getElementById("btn-valider-ajout");
+const blocAddImg = document.querySelector(".bloc-add-img");
+const imgPreview = document.querySelector(".bloc-add-img img");
+const fileInput = document.querySelector(".bloc-add-img input");
+const fileLabel = document.querySelector(".bloc-add-img label");
+const fileIcon = document.getElementById("fileIcon");
+const fileP = document.querySelector(".bloc-add-img p");
+const form = document.querySelector(".modale-content form");
+const title = document.querySelector(".modale-content #img-title");
+const category = document.querySelector(".modale-content #Catégorie-select");
+const token = localStorage.getItem('token');
+const errorMessage = document.querySelector(".modale-content .errorMessage");
+const modalGallery = document.querySelector('.modal-gallery');
 
 
 const openModal = function (e) {
@@ -38,40 +50,41 @@ const closeModal = function (e) {
     displayWorks();
 }
 
-const stopPropagation = function (e) { //fonction qui empeche la propagation de l'evenement vers les parents donc de maintenanit l'evenement du click sur la croix pour fermer la modale
+// limiter la propagation du click à la croix
+
+const stopPropagation = function (e) {
     e.stopPropagation();
 }
+
 //Fermer la modale avec touche echap
+
 window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     }
 
 })
+// Ouvrir la modale avec le bouton modifier
+
 document.querySelectorAll('.js-modal').forEach(a => {
-    a.addEventListener('click' , openModal);  // au click sur le lien, declanche la fonction
-    
+    a.addEventListener('click' , openModal);
 });
 
 //Afficher 2e vue de la modale
+
 const openVue2 = function (e) {
-    e.preventDefault(); //evite le rechargement par defaut de la page
+    e.preventDefault(); 
     
     vue1.classList.add("hidden");
     vue2.classList.remove("hidden");
 
-   
     vue2.querySelector('.js-modal-return').addEventListener('click', returnToModal1);
     vue2.addEventListener('click', stopPropagation);
     vue2.querySelector('.js-modal-close').addEventListener('click', closeModal);
-
-
-
-
-
 }
 
 //retour de modale 2 a modale 1
+
 function returnToModal1() {
     vue2.classList.add("hidden");
     vue1.classList.remove("hidden");
@@ -79,22 +92,10 @@ function returnToModal1() {
 }
 
 // Previsualisation de l'image
-const blocAddImg = document.querySelector(".bloc-add-img");
-const imgPreview = document.querySelector(".bloc-add-img img");
-const fileInput = document.querySelector(".bloc-add-img input");
-const fileLabel = document.querySelector(".bloc-add-img label");
-const fileIcon = document.getElementById("fileIcon");
-const fileP = document.querySelector(".bloc-add-img p");
-
-
-
-
-//précharger l'image et l'afficher dans une balise -> process
 
 fileInput.addEventListener("change",()=>{
-    const file = fileInput.files[0]; //recupère la donnée dans l'input
-    if (file) {
-            
+    const file = fileInput.files[0];
+    if (file) {         
         const reader = new FileReader();
         reader.onload = function (e) {
             imgPreview.src = e.target.result;
@@ -102,20 +103,21 @@ fileInput.addEventListener("change",()=>{
             imgPreview.classList.remove("hidden");
             fileLabel.classList.add("hidden");
             fileIcon.classList.add("visibility");
-  
         }
         reader.readAsDataURL(file);
     }
 })
+
 // Créer une list de catégorie pour l'input select
+
 async function displayCategoryModal() {
     const select = document.querySelector(".modale-content #Catégorie-select");
     const categorys = await getCategorys();
     categorys.forEach(category => {
-        const option = document.createElement("option");
-        option.value = category.id;
-        option.textContent = category.name
-        select.appendChild(option);
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.textContent = category.name
+    select.appendChild(option);
     });
 }
 displayCategoryModal();
@@ -124,62 +126,41 @@ displayCategoryModal();
 
  document.addEventListener("DOMContentLoaded", () => {
     function inputsCheckUp() {
-        
-        
         form.addEventListener("input",()=>{           
             if (title.value !== "" && category.value !== "" && fileInput.value !== "") {
                 btnValiderForm.classList.add("filter_active");
                 btnValiderForm.classList.add("hover-effect");
-                btnValiderForm.disabled = false;
-                
+                btnValiderForm.disabled = false;         
             } else {
                 btnValiderForm.classList.remove("filter_active");
                 btnValiderForm.classList.remove("hover-effect");
                 btnValiderForm.disabled = true;
             }
-        });
-        
+        });  
     }
     inputsCheckUp();
 });
 
 // Ajouter un projet en methode POST
 
-const form = document.querySelector(".modale-content form");
-const title = document.querySelector(".modale-content #img-title");
-const category = document.querySelector(".modale-content #Catégorie-select");
-const token = localStorage.getItem('token');
-const errorMessage = document.querySelector(".modale-content .errorMessage");
-
-
-
 form.addEventListener("submit", async (e)=>{
     e.preventDefault();
     
     let formData = new FormData();
-
         formData.append("image", fileInput.files[0]);
         formData.append("title", title.value);
         formData.append("category", category.value);
-
     if (fileInput.files[0].size > 4000000) {
         console.error("Le fichier est trop grand ! (4mo max)");
         errorMessage.innerHTML = "Le fichier est trop grand ! (4mo max)";
         return;
      }
-
     try {
         const response = await fetch ("http://localhost:5678/api/works",{
         method: "POST",
-        headers: {
-            'Authorization':`Bearer ${token}`
-            // "content-Type":"application/json"
-            // ChatGpt : Assurez-vous de ne pas définir le content-Type dans les en-têtes 
-            //           pour les formulaires multipart/form-data. Cela sera automatiquement défini par le navigateur.
-        },
+        headers: {'Authorization':`Bearer ${token}`},
         body: formData
         });  
-
         if (!response.ok) {
             throw new Error("Erreur lors de l'ajout du projet : " + response.status);
         }
@@ -192,21 +173,16 @@ form.addEventListener("submit", async (e)=>{
         fileIcon.classList.remove("visibility");
         fileP.classList.remove("hidden");
         btnValiderForm.classList.remove("hover-effect");
-        
         gallery.innerHTML = "";
-        displayModalGallery();
-        
-        
-        
+        displayModalGallery();   
         closeModalWithoutEvent();
-
     } catch (error) {
         console.error("Erreur lors de l'ajout du projet :", error);
-    }
-    
+    }  
 });
 
 // Fonction closeModal sans événement
+
 const closeModalWithoutEvent = function () {
     if (modal === null) return;
     vue2.classList.add("hidden");
@@ -226,26 +202,20 @@ const closeModalWithoutEvent = function () {
 
 
 // gestion de l'affichage et supression de projet dans la modale
-const modalGallery = document.querySelector('.modal-gallery');
 
 async function displayModalGallery() {
     modalGallery.innerHTML = "";
-
     const modalGalleryContent = await getWorks();
-
     modalGalleryContent.forEach(work => {
         const figure = document.createElement("figure");
         const img =document.createElement("img");
         const trashContainer = document.createElement("div");
         const trash =document.createElement("i");
-
         trashContainer.classList.add("trash-container");
         trash.classList.add("fa-solid", "fa-trash-can");
         figure.classList.add("figure-modal");
-
         trash.id = work.id;
         img.src = work.imageUrl
-
         modalGallery.appendChild(figure);
         figure.appendChild(trashContainer);
         figure.appendChild(img);
@@ -267,10 +237,9 @@ displayModalGallery();
                 method: 'DELETE',
                 headers: {'accept':'application/json',
                          'authorization':`Bearer ${token}`
-            }
-            
-        };
-             fetch(`http://localhost:5678/api/works/${id}`,init)
+                        }
+                        };
+            fetch(`http://localhost:5678/api/works/${id}`,init)
             .then((response)=>{
                 if (!response.ok) {
                     return Promise.reject("La suppression a échoué !");
@@ -282,17 +251,12 @@ displayModalGallery();
                 console.log("suppression réussie :" ,data);
 
                 gallery.innerHTML = "";
-                displayModalGallery();// si réussi affiche (reactualise) la gallerie de la modale
-                displayWorks();// et réactualise l'affichage des projets
-            
-
+                displayModalGallery();
+                displayWorks();
             })
             .catch((error) => {
                 console.error("Erreur lors de la suppression :", error);
             });
-            
-
         })
     });
 }
-

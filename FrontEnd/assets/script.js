@@ -11,7 +11,6 @@ portfolio.appendChild(filters);
 
 document.addEventListener('DOMContentLoaded', () => {
   if (sectionPortfolio && filters && gallery) {
-    // Insérer le conteneur de filtre entre le titre et la galerie
     sectionPortfolio.insertBefore(filters, gallery);
 } else {
     console.error('Un ou plusieurs éléments sont introuvables dans le DOM');
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-// **weight menu buttons**
 function menuBtnStyle() {
   const menuBtn = document.querySelectorAll("nav a");
   menuBtn.forEach((btn) => {
@@ -29,14 +27,10 @@ function menuBtnStyle() {
 }
 menuBtnStyle();
 
+// Récupération des projets via l'API
 
-
-
-//appel a l'API pour récupéerer dynamiquement les projets de l'architecte (les Works).
 async function getWorks() {
-  //promesse de réponse, je deùande l'info a l'API
   const response = await fetch("http://localhost:5678/api/works");
-  //le body n'est pas lisible, je demande a obtenir la réponse en .json. avec un await pour attendre quil ai bien finit la demande avant de continuer .
   return (responseJson = await response.json());
 }
 getWorks();
